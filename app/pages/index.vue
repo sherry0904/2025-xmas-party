@@ -5,6 +5,14 @@ const gameStore = useGameStore()
 const stageRunner = useStageRunner()
 const localStore = useLocalStore()
 
+// 初始化 store 和音效
+onMounted(() => {
+  gameStore.initialize()
+  
+  const audio = useAudio()
+  audio.preloadAll()
+})
+
 // 頁面資訊
 const hasExistingData = computed(() => {
   return gameStore.config.players.length > 0
@@ -102,6 +110,12 @@ const exportData = () => {
           >
             ▶️ 開始遊戲
           </button>
+          <NuxtLink
+            to="/game/luck-board"
+            class="block w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition text-center"
+          >
+            🎁 幸運盤面（新！）
+          </NuxtLink>
           <button 
             @click="stageRunner.goToManage"
             class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition"
