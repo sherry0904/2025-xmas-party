@@ -117,7 +117,7 @@ const getPlayerInfo = (playerId: PlayerId | null) => {
         
         <!-- 格子陣列 -->
         <div class="cells-grid">
-          <Cell
+          <LuckBoardCell
             v-for="cell in luckBoard.board.value"
             :key="cell.id"
             :cell-id="cell.id"

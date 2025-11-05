@@ -1,0 +1,14 @@
+<!-- 
+  這是預設玩家圖片的佔位符
+  
+  請將此檔案替換為實際的 default.jpg 圖片
+  或在 game-config.json 中使用 emoji 作為 avatar
+  
+  建議圖片規格：
+  - 尺寸：300x300 像素
+  - 格式：JPG、PNG 或 WebP
+  - 大小：< 500KB
+-->
+
+如果你看到這段文字，表示預設圖片尚未設置。
+請放置一張 default.jpg 到此目錄，或使用 emoji。

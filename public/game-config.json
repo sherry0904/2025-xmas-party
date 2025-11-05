@@ -1,0 +1,73 @@
+{
+  "game": {
+    "title": "聖誕派對遊戲 2025",
+    "sound": {
+      "enabled": true,
+      "volume": 0.7
+    },
+    "colorblindMode": false
+  },
+  "players": [
+    {
+      "id": "player-1",
+      "name": "小明",
+      "avatar": "player-1.jpg",
+      "color": "#ef4444"
+    },
+    {
+      "id": "player-2",
+      "name": "小華",
+      "avatar": "player-2.jpg",
+      "color": "#10b981"
+    },
+    {
+      "id": "player-3",
+      "name": "小美",
+      "avatar": "player-3.jpg",
+      "color": "#f59e0b"
+    },
+    {
+      "id": "player-4",
+      "name": "小強",
+      "avatar": "player-4.jpg",
+      "color": "#3b82f6"
+    },
+    {
+      "id": "player-5",
+      "name": "小芳",
+      "avatar": "player-5.jpg",
+      "color": "#8b5cf6"
+    }
+  ],
+  "stages": [
+    {
+      "id": "stage-1",
+      "name": "幸運盤面",
+      "type": "LuckBoard",
+      "config": {
+        "rows": 10,
+        "cols": 6,
+        "greenCount": 30,
+        "redCount": 30,
+        "greenScore": 10,
+        "redScore": -5
+      }
+    },
+    {
+      "id": "stage-2",
+      "name": "熟人問答",
+      "type": "Quiz",
+      "config": {
+        "questions": []
+      }
+    },
+    {
+      "id": "stage-3",
+      "name": "你比我猜",
+      "type": "Guess",
+      "config": {
+        "topics": []
+      }
+    }
+  ]
+}

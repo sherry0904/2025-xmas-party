@@ -123,7 +123,7 @@ const currentPlayerInfo = computed(() => {
 
         <!-- 中間：盤面 -->
         <div class="center-panel">
-          <GridBoard
+          <LuckBoardGridBoard
             :current-player-id="currentPlayer"
             @cell-picked="handleCellPicked"
           />

@@ -1,4 +1,18 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
+
+// 讓應用啟動時就載入靜態設定
+const gameStore = useGameStore()
+// 預載音效
+const audio = useAudio()
+
+onMounted(() => {
+  // 初始化遊戲設定（從 public/game-config.json）
+  gameStore.initialize()
+  // 預載音效檔
+  audio.preloadAll()
+})
+
 // 產生雪花陣列
 const snowflakes = Array.from({ length: 20 }, (_, i) => i + 1)
 </script>

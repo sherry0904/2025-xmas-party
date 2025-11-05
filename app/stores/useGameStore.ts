@@ -103,31 +103,66 @@ export const useGameStore = defineStore('game', {
 
   actions: {
     /**
-     * 初始化（從 LocalStorage 載入或使用預設值）
+     * 初始化（從 public/game-config.json 載入配置）
      */
-    initialize() {
-      const localStore = useLocalStore()
-      
-      const savedConfig = localStore.getConfig()
-      const savedState = localStore.getState()
-      
-      if (savedConfig) this.config = savedConfig
-      if (savedState) this.state = savedState
-      
-      // 確保所有玩家都有初始分數
-      this.config.players.forEach(player => {
-        if (this.state.scores[player.id] === undefined) {
-          this.state.scores[player.id] = 0
+    async initialize() {
+      try {
+        // 從 JSON 檔讀取遊戲配置
+        const response = await fetch('/game-config.json')
+        if (!response.ok) throw new Error('無法載入遊戲配置')
+        
+        const jsonConfig = await response.json()
+        
+        // 轉換 JSON 格式為內部格式
+        this.config = {
+          players: jsonConfig.players || [],
+          stages: (jsonConfig.stages || []).map((stage: any) => ({
+            ...stage,
+            enabled: true // 預設啟用所有關卡
+          })),
+          votes: { hardest: {}, easiest: {} },
+          revealMode: 'suspense',
+          sound: {
+            on: jsonConfig.game?.sound?.enabled ?? true,
+            volume: jsonConfig.game?.sound?.volume ?? 0.7
+          },
+          accessibility: {
+            colorBlindMode: jsonConfig.game?.colorblindMode ?? false
+          }
         }
-      })
+        
+        // 從 localStorage 讀取遊戲狀態（分數等）
+        const localStore = useLocalStore()
+        const savedState = localStore.getState()
+        
+        if (savedState) {
+          this.state = savedState
+        } else {
+          // 初始化分數
+          this.state = createDefaultState()
+          this.config.players.forEach(player => {
+            this.state.scores[player.id] = 0
+          })
+        }
+        
+        console.log('✅ 遊戲配置載入成功', {
+          players: this.config.players.length,
+          stages: this.config.stages.length
+        })
+      } catch (error) {
+        console.error('❌ 載入遊戲配置失敗：', error)
+        // 使用預設配置
+        this.config = createDefaultConfig()
+        this.state = createDefaultState()
+      }
     },
 
     /**
-     * 儲存到 LocalStorage
+     * 儲存遊戲狀態到 LocalStorage（不儲存配置）
      */
     save() {
       const localStore = useLocalStore()
-      localStore.setConfig(this.config)
+      // 只儲存遊戲狀態（分數、關卡進度等），配置從 JSON 讀取
       localStore.setState(this.state)
     },
 
